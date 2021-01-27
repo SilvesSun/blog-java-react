@@ -1,15 +1,12 @@
-package com.sksun.controller;
+package com.sksun.blog.controller;
 
-import com.sksun.entity.Article;
-import com.sksun.service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sksun.blog.entity.ArticleEntity;
+import com.sksun.blog.service.ArticleService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("article")
+@RequestMapping("articles")
 public class ArticleController {
     final ArticleService articleService;
 
@@ -18,8 +15,10 @@ public class ArticleController {
     }
 
     @RequestMapping("/getArticle")
-    public Article getArticle(Integer articleId){
-        Article article = articleService.getById(articleId);
+    public ArticleEntity getArticle(Integer id){
+        System.out.println(id);
+        ArticleEntity article = articleService.findArticleById(id);
+        System.out.println(article);
         return article;
-    };
+    }
 }

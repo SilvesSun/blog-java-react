@@ -1,4 +1,4 @@
-package com.sksun.config;
+package com.sksun.blog.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.beans.factory.annotation.Configurable;
