@@ -41,4 +41,7 @@
         </collection>
     </resultMap>
     
+    <select id="getArticleList" resultMap="articleMap">
+        <include refid="selectArticleBase"/>
+    </select>
 </mapper>

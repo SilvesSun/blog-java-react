@@ -14,5 +14,5 @@ public interface ArticleMapper extends BaseMapper<ArticleEntity> {
     ArticleEntity findArticleById(int id);
 
 //    @Select("select * from article")
-//    IPage<ArticleEntity> getArticleList(Page<?> page);
+    IPage<ArticleEntity> getArticleList(Page<?> page);
 }

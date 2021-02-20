@@ -23,6 +23,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, ArticleEntity
     @Override
     public Page<ArticleEntity> getArticleList(Page<ArticleEntity> page) {
 //        Wrapper<ArticleEntity> wrapper = new QueryWrapper<ArticleEntity>().gt("id", 0).orderByDesc("id");
-        return articleMapper.selectPage(page, null);
+        return (Page<ArticleEntity>) articleMapper.getArticleList(page);
     }
 }
