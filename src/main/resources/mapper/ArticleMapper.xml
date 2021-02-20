@@ -5,7 +5,7 @@
         >
 
 <mapper namespace="com.sksun.blog.mapper.ArticleMapper">
-    <select id="findArticleById" resultMap="articleMap">
+    <sql id="selectArticleBase">
         SELECT a.id a_id,
                a.title a_title,
                a.content content,
@@ -19,6 +19,10 @@
                  JOIN category c ON c.id = a.category_id
                  left join article_tag at on a.id = at.article_id
                  join tag t on t.id = at.tag_id
+    </sql>
+
+    <select id="findArticleById" resultMap="articleMap">
+        <include refid="selectArticleBase"/>
         where a.id = #{id}
     </select>
     <resultMap id="articleMap" type="Article">
@@ -36,5 +40,5 @@
             <result property="name" column="tag_name"/>
         </collection>
     </resultMap>
-
+    
 </mapper>
