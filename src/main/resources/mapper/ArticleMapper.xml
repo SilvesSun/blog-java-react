@@ -16,9 +16,9 @@
                t.id tag_id,
                t.name tag_name
         FROM article a
-                 JOIN category c ON c.id = a.category_id
+                 left join category c ON c.id = a.category_id
                  left join article_tag at on a.id = at.article_id
-                 join tag t on t.id = at.tag_id
+                 left join tag t on t.id = at.tag_id
     </sql>
 
     <select id="findArticleById" resultMap="articleMap">
@@ -26,7 +26,7 @@
         where a.id = #{id}
     </select>
     <resultMap id="articleMap" type="Article">
-        <result property="id" column="a_id"/>
+        <id property="id" column="a_id"/>
         <result property="title" column="a_title"/>
         <result property="content" column="content"/>
         <result property="author" column="author"/>
@@ -35,13 +35,27 @@
             <id property="id" column="c_id"/>
             <result property="name" column="c_name"/>
         </association>
-        <collection property="tagSet" ofType="Tag">
-            <result property="id" column="tag_id"/>
-            <result property="name" column="tag_name"/>
-        </collection>
+        <collection property="tagSet" column="a_id" select="selectTagFromArticle"/>
     </resultMap>
-    
+
+    <resultMap id="tagBase" type="Tag">
+        <result property="id" column="tag_id"/>
+        <result property="name" column="tag_name"/>
+    </resultMap>
+
+    <select id="selectTagFromArticle" resultMap="tagBase">
+        select t.id as tag_id, t.name as tag_name from article_tag at left join tag t on t.id = at.tag_id where at.article_id = #{a_id}
+    </select>
+
     <select id="getArticleList" resultMap="articleMap">
-        <include refid="selectArticleBase"/>
+        SELECT a.id a_id,
+               a.title a_title,
+               a.content content,
+               a.author author,
+               a.category_id a_category_id,
+               c.id c_id,
+               c.name c_name
+        FROM article a
+                 left join category c ON c.id = a.category_id
     </select>
 </mapper>
